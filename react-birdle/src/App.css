@@ -14,6 +14,7 @@ body {
 }
 
 .tile {
+  border: none;
   font-size: 1em;
 }
 
@@ -21,7 +22,7 @@ body {
   display: none;
 }
 
-.correct {
+#correct {
   color: rgb(64, 188, 97);
 }
 

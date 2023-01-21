@@ -14,29 +14,86 @@ const word = [...bird]
 console.log(word)
 const [userInput, setUserInput] = useState('')
 const [userArray, setUserArray] = useState<Array<string>>([])
-const [styleClass, setStyleClass] = useState<Array<string>>([])
-const [reveal, setReveal] = useState(Boolean)
+const [styleClass, setStyleClass] = useState(new Array(userArray.length).fill(''))
+const [reveal, setReveal] = useState(false)
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value)
+    // let newArr = [...userInput]
+    //     for (let i = 0; i <= word.length; i++) {
+    //         if(userInput == bird){
+    //             alert('You Win!')
+    //             break
+    //         } else {
+    //         if(word[i] == newArr[i]){
+    //             let bingo = [...styleCorrect]
+    //             bingo[i] = "correct"
+    //             setStyleCorrect(bingo)
+    //             // setUserArray(newArr)
+    //             continue      
+    //         } 
+    //         else if (word.includes(newArr[i])){
+    //             let yellow = [...styleClass]
+    //             yellow[i] = "yellow"
+    //             setStyleClass(yellow)
+    //             // setUserArray(newArr)
+    //             continue 
+    //         } else { continue }
+    //     }}
+    //     setUserArray(newArr)
 }
 
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     let newArr = [...userInput]
+    let newStyle = new Array(word.length).fill('')
+    // let wordSet = new Set(word)
         for (let i = 0; i < word.length; i++) {
             if(word[i] == newArr[i]){
-            let bingo = [...styleClass]
-            bingo[i] = "correct"
-            setStyleClass(bingo)     
-            } else if (newArr[i].includes(word[i])){
-                let yellow = [...styleClass]
-                yellow[i] = "yellow"
-                setStyleClass(yellow)
-            } else { setUserArray(newArr)}
-        }
-    setUserArray(newArr)    
-    setReveal(true)
+                // let newStyle = [...styleClass]
+                newStyle[i] = "correct"
+                // setStyleClass(newStyle)
+                // setUserArray(newArr)
+                // continue      
+            } else if (word.includes(newArr[i])){
+                // let newStyle = [...styleClass]
+                newStyle[i] = "yellow"
+                // setStyleClass(newStyle)
+                // setUserArray(newArr)
+                // continue 
+            }
+            setStyleClass(newStyle)
+            setUserArray(newArr)
+            if(userInput == bird){
+                alert('You Win!')
+                break
+        }}
+
+
+
+    // let newArr = [...userInput]
+    //     for (let i = 0; i < word.length; i++) {
+    //         if(userInput == bird){
+    //             alert('You Win!')
+    //             break
+    //         } else {
+    //         if(word[i] == newArr[i]){
+    //             let bingo = [...styleCorrect]
+    //             bingo[i] = "correct"
+    //             setStyleCorrect(bingo)
+    //             setUserArray(newArr)
+    //             continue      
+    //         } 
+    //         else if (word.includes(newArr[i])){
+    //             let yellow = [...styleClass]
+    //             yellow[i] = "yellow"
+    //             setStyleClass(yellow)
+    //             setUserArray(newArr)
+    //             continue 
+    //         } else { setUserArray(newArr)}
+    //     }}
+    // setUserArray(newArr)    
+    setReveal(!reveal)
 }
 
 
@@ -49,22 +106,57 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             <p>{bird}</p>
 
             <form onSubmit={handleSubmit}>
-            {reveal ? userArray.map((letter, index) => (
-            <span key={index} className={styleClass[index]}>
-            {letter}
-            </span>))
-                 : <input autoFocus className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input>} <br/>
+                {reveal ? userArray.map((letter, index) => (
+                <span key={index} className={styleClass[index]}>
+                {letter}
+                </span>))
+                    : <input autoFocus className='tile' type='text' placeholder='        ' minLength={8} maxLength={8} onChange={handleChange}></input>} <input id='submission' type='submit'></input><br/></form>
+                {/* {setReveal(false)} */}
+                <form onSubmit={handleSubmit}>
+                {reveal ? userArray.map((letter, index) => (
+                            <span key={index} className={styleClass[index]}>
+                            {letter}
+                            </span>))
+                                : <input className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input>} <br/></form>
+                 {/* {setReveal(false)} */}
+                {/* {reveal ? userArray.map((letter, index) => (
+                            <span key={index} className={styleClass[index]}>
+                            {letter}
+                            </span>))
+                                : <input autoFocus className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input>} <br/>
+                {setReveal(false)}
+                {reveal ? userArray.map((letter, index) => (
+                            <span key={index} className={styleClass[index]}>
+                            {letter}
+                            </span>))
+                                : <input autoFocus className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input>} <br/>
+                {setReveal(false)}
+                {reveal ? userArray.map((letter, index) => (
+                            <span key={index} className={styleClass[index]}>
+                            {letter}
+                            </span>))
+                                : <input autoFocus className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input>} <br/>
+                {setReveal(false)}
+                {reveal ? userArray.map((letter, index) => (
+                            <span key={index} className={styleClass[index]}>
+                            {letter}
+                            </span>))
+                                : <input autoFocus className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input>} <br/>
+                {setReveal(false)}
+                {reveal ? userArray.map((letter, index) => (
+                            <span key={index} className={styleClass[index]}>
+                            {letter}
+                            </span>))
+                                : <input autoFocus className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></ input>} <br/>
+                {setReveal(false)}
+                {reveal ? userArray.map((letter, index) => (
+                            <span key={index} className={styleClass[index]}>
+                            {letter}
+                            </span>))
+                                : <input autoFocus className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input>} <br/> */}
 
-                <input className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input><br/>
-                <input className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input><br/>
-                <input className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input><br/>
-                <input className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input><br/>
-                <input className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input><br/>
-                <input className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input><br/>
-                <input className='tile' type='text' placeholder='        ' maxLength={8} onChange={handleChange}></input>
-                <input id='submission' type='submit'></input>
                 
-            </form>
+            {/* </form> */}
         </div>
   );
 }
