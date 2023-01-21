@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 
 // interface Props {
 // id: number,
@@ -11,11 +11,13 @@ import React, {useState} from 'react'
 //I'm hoping I can use CSS to make the input fields look like tiles with borders around the individual characters but unsure how that would work when it's empty now that I think about it. Maybe with spaces as placeholders?
 const Game = ({bird}: {bird: string}) => {
 const word = [...bird]
-console.log(word)
+// console.log(word)
 const [userInput, setUserInput] = useState('')
 const [userArray, setUserArray] = useState<Array<string>>([])
 const [styleClass, setStyleClass] = useState(new Array(userArray.length).fill(''))
 const [reveal, setReveal] = useState(false)
+let countTurns = useRef(0)
+
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value)
@@ -48,6 +50,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     let newArr = [...userInput]
     let newStyle = new Array(word.length).fill('')
     // let wordSet = new Set(word)
+    if (countTurns.current <= 8) {
         for (let i = 0; i < word.length; i++) {
             if(word[i] == newArr[i]){
                 // let newStyle = [...styleClass]
@@ -64,6 +67,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             }
             setStyleClass(newStyle)
             setUserArray(newArr)
+            
             if(userInput == bird){
                 alert('You Win!')
                 break
@@ -94,12 +98,14 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     //     }}
     // setUserArray(newArr)    
     setReveal(!reveal)
+    countTurns.current++
+    } else { alert(`The bird was ${bird}. Too bad.`)}
 }
 
 
 //in the onSubmit can do something like-- if submitted value != {bird} show {bird}
 
-
+console.log(countTurns)
 
     return (
         <div className='grid'>
