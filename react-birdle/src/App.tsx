@@ -18,7 +18,7 @@ const [birdWord, setBirdWord] = useState("")
 const url = 'http://localhost:8000/api/birdle/'
 
 // This checks to see if birdArray is already loaded. If not, it does an axios get request to the server for the array of data. Else, it returns the already loaded array.
-const getWord= (): any => {
+const getWord= () => {
   let i = Math.floor(Math.random() * birdArray.length)
   if (birdArray[i].name.length < 8) {
   axios.get(url)
@@ -28,7 +28,7 @@ const getWord= (): any => {
 }
 
 //This function sets the birdWord state in order to pass it to the Game child component.
-const pickBird = (): any => {
+const pickBird = () => {
   getWord()
   let pick = Math.floor(Math.random() * birdArray.length)
   setBirdWord(birdArray[pick].name)
@@ -45,7 +45,9 @@ console.log(birdArray)
 console.log(birdWord)
   return (
     <div className="App">
-      
+      <h1>Birdle</h1>
+      <br/>
+      <br/>
       <Game bird={birdWord} />
     </div>
   );
