@@ -18,29 +18,7 @@ const Game = ({bird}: {bird: string}) => {
         color: ''
     }])
     let countTurns = useRef(0)
-
-    // const formatting = () => {
-    //     let solutionArr = [...bird]
-    //     let formattedUserInput = [...userInput].map((letter) => {
-    //         return {key: letter, color: 'grey'}
-    //     })
-
-    //     // Marking exact matches
-    //     formattedUserInput.forEach((letter, index) => {
-    //         if (solutionArr[index] === letter.key) {
-    //             formattedUserInput[index].color = 'green'
-    //             solutionArr[index] = ''
-    //         }
-    //     })
-
-    //     // Marking partial matches
-    //     formattedUserInput.forEach((letter, index) => {
-    //         if (solutionArr.includes(letter.key) && letter.color !== 'green') {
-    //             formattedUserInput[index].color = 'yellow'
-    //             solutionArr[solutionArr.indexOf(letter.key)] = ''
-    //         }
-    //     })
-    // }
+    let matchCounter = useRef(0)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserInput(e.target.value)
@@ -53,12 +31,14 @@ const Game = ({bird}: {bird: string}) => {
         let formattedUserInput = [...userInput].map((letter) => {
             return {key: letter, color: 'grey'}
         })
+        
 
         // Marking exact matches
         formattedUserInput.forEach((letter, index) => {
             if (solutionArr[index] === letter.key) {
                 formattedUserInput[index].color = 'green'
                 solutionArr[index] = ''
+                matchCounter.current++
             }
         })
 
@@ -72,7 +52,28 @@ const Game = ({bird}: {bird: string}) => {
         setFormatted(formattedUserInput)
         setReveal(!reveal)
         countTurns.current++
-        // } else { alert(`The bird was ${bird}. Too bad.`)}
+        gameOver()
+    }
+
+    // Wins & Losses
+
+    const gameOver = () => {
+        if (matchCounter.current === 8 && countTurns.current <=3) {
+            alert('Excellent!')
+        }
+        else if (matchCounter.current === 8 && (countTurns.current >3 && countTurns.current <= 5)) {
+            alert('Impressive!')
+        }
+        else if (matchCounter.current === 8 && (countTurns.current >5 && countTurns.current <= 6)) {
+            alert('Great!')
+        }
+        else if (matchCounter.current === 8 && (countTurns.current >6 && countTurns.current <= 8)) {
+            alert('Close call!')
+        }
+
+        else if (countTurns.current === 8 && matchCounter.current != 8) {
+            alert(`The bird was ${bird}. Too bad.`)
+        }
     }
 
 
@@ -83,13 +84,21 @@ const Game = ({bird}: {bird: string}) => {
         return (
             <div className='grid'>
                 <p>{bird}</p>
-
+                <div>
                 <form onSubmit={handleSubmit}>
                     {reveal ? formattedInput.map((letter, index) => (
                     <span key={index} className={letter.color}>
                     {letter.key}
                     </span>))
-                        : <input autoFocus className='tile' type='text' placeholder='        ' minLength={8} maxLength={8} onChange={handleChange}></input>} <input id='submission' type='submit'></input><br/></form>
+                        : <input autoFocus className='tile' type='text' placeholder='    ' minLength={8} maxLength={8} onChange={handleChange}></input>} <input id='submission' type='submit'></input><br/></form>
+                </div>
+                            <br/><br/>
+                <form onSubmit={handleSubmit}>
+                    {reveal ? formattedInput.map((letter, index) => (
+                    <span key={index} className={letter.color}>
+                    {letter.key}
+                    </span>))
+                        : <input autoFocus className='tile' type='text' placeholder='    ' minLength={8} maxLength={8} onChange={handleChange}></input>} <input id='submission' type='submit'></input><br/></form>
 
             </div>
     );
