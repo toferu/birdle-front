@@ -4,9 +4,14 @@
   color: white;
 }
 
+
 body {
   display: flex;
   justify-content: center;
+}
+
+.crow {
+  color: white;
 }
 
 div {
@@ -29,21 +34,19 @@ div {
 
 .grey {
   border: 2px solid grey;
-  padding: .6ch;
-  margin: .2em;
+  
   background-color: rgb(75, 78, 76);
 }
 
 .green {
-  margin: .2em;
+  
   border: 2px solid grey;
-  padding: .6ch;
+  
   background-color: rgb(64, 188, 97);
 }
 
 .yellow {
-  margin: .2em;
-  padding: .6ch;
+
   border: 2px solid grey;
   background-color: rgb(248, 202, 65);
 }

@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios'
-import  Game  from './components/Game';
+import UI from './components/UI'
 import './App.css';
 
 
@@ -45,10 +45,11 @@ console.log(birdArray)
 console.log(birdWord)
   return (
     <div className="App">
-      <h1>Birdle</h1>
+      <h1>Birdle </h1>
       <br/>
       <br/>
-      <Game bird={birdWord} />
+      <img src='../public/crow-solid.svg'></img>
+      <UI bird={birdWord} />
     </div>
   );
 }
