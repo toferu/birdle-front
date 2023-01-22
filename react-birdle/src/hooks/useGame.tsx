@@ -11,35 +11,34 @@ const useGame = ({bird}: {bird: string}) => {
     const [pastGuesses, setPastGuesses] = useState<Array<Array<object>>>([[{}]])
     let countTurns = useRef(0)
     let matchCounter = useRef(0)
-    // The fledgling of an idea below was to count keypresses and if == 8 then the conditions are met for handlesubmit. This is to prevent early submission on a users' guess, but now I'm seeing that resetting that value may be tricky? Actually maybe I just reset the value at the end of the handleSubmit.. After implementing that it now seems busted because using the delete key would still add to the keyPresses var.. OH If I instead compare the .length of a string of the keypresses that should do it! Wait... I only need to check the .length of the originally userInput state at that point right? AH but I need to reset the length at the end... Now I'm getting confused. Not to mention I'll need to do something like move the userInput of one from currentGuess to pastGuesses for the next iteration I think..   FormattedInput could be the old guess and I could reset userInput at the end of the handleSubmit??
-
-    //I think formattedInput would need to be passed off to an array of objects like: guesses = [{
-    //     key: '',
-    //     color: ''
-    // },
-    // {
-    //     key: '',
-    //     color: ''
-    // }]
-
-    //etc.....But the example info above would be nested. I can't picture how the parent array of objects would look.. maybe [[{}],[{}],[{}]]? Not sure how to write that for typescript.
+ 
     const [keyPresses, setKeyPresses] = useState('')
 
     //Saves typed input from user and adds to wonky keypress counter.
     const handleChange = (e: KeyboardEvent) => {
         // setKeyPresses(e.key)
-        setUserInput(e.key)
-
-        if (e.key === 'Backspace') {
-            setUserInput(previous => previous.slice(0, -1))
-            return
+        if (e.key === "Backspace") {
+            // e.preventDefault()
+            if(userInput.length > 0) {
+            setUserInput(previous => {
+                console.log('previous', previous)
+                return previous.slice(0, -1) 
+            })
+        } return
+        }else if (userInput.length < 8) {
+            console.log(userInput)
+            setUserInput(previous => previous + e.key)
+            console.log(userInput)
         }
+         
 
+        
+    //    console.log(userInput)
         // if (history.includes(userInput)) {
         //     alert('You already tried this word. Please try again')
         //     return
         // }
-        // console.log(e.key)
+        
     }
     //This does almost everything right now. It's sort of a bloated mess.
     const handleSubmit = (e: KeyboardEvent) => {
@@ -57,7 +56,7 @@ const useGame = ({bird}: {bird: string}) => {
         let formattedUserInput = [...userInput].map((letter) => {
             return {key: letter, color: 'grey'}
         })
-        
+        console.log(typeof formattedUserInput)
         // Marking exact matches
         formattedUserInput.forEach((letter, index) => {
             if (solutionArr[index] === letter.key) {
@@ -83,6 +82,7 @@ const useGame = ({bird}: {bird: string}) => {
         gameOver()
     }}
 
+    // console.log(userInput)
     // Wins & Losses
 
     const gameOver = () => {

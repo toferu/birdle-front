@@ -11,17 +11,17 @@ interface GridProps {
 
 export default function Grid(props: GridProps) {
 
-let guess = [...props.userInput]
+let keystrokes = [...props.userInput]
 
     return (
         <div>
-            
-            {guess.map((letter, index) => {
+{/*             
+            {pastGuesses.map((letter, index) => {
                 if(countTurns.current === index) {
                     return <Row key={index} userInput={userInput} />
                 }
                 return <Row key={index} guess={letter} />
-            })}
+            })} */}
         </div>
     )
 }

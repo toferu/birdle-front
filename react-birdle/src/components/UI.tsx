@@ -8,9 +8,9 @@ export default function UI({bird}: { bird: string})  {
     
 //This is effectively a keylogger
    useEffect(() => {
-    window.addEventListener('keypress', handleChange)
+    window.addEventListener('keydown', handleChange)
 
-    return() => window.removeEventListener('keypress', handleChange)
+    return() => window.removeEventListener('keydown', handleChange)
    }, [handleChange])
     
     
