@@ -1,12 +1,12 @@
-import {useEffect} from 'react'
+import {useRef, useEffect} from 'react'
 import useGame from '../hooks/useGame'
-
+import Grid from './Grid'
 
 export default function UI({bird}: { bird: string})  {
 
-   const { userInput, handleChange} = useGame({bird})
+   const { countTurns, pastGuesses, userInput, handleChange} = useGame({bird})
     
-
+//This is effectively a keylogger
    useEffect(() => {
     window.addEventListener('keypress', handleChange)
 
@@ -15,8 +15,9 @@ export default function UI({bird}: { bird: string})  {
     
     
     return (
-
- <></>
+        <div>
+            <Grid countTurns={countTurns} userInput={userInput} pastGuesses={pastGuesses} handleChange={handleChange} />
+        </div>
 
 
     )

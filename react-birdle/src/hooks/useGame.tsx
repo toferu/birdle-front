@@ -2,12 +2,13 @@ import React, {useState, useRef} from 'react'
 
 const useGame = ({bird}: {bird: string}) => {
     const [userInput, setUserInput] = useState('')
-    // const [userArray, setUserArray] = useState<Array<string>>([])
+    const [history, setHistory] = useState<Array<string>>([])
     const [reveal, setReveal] = useState(false)
-    const [formattedInput, setFormatted] = useState([{
-        key: '',
-        color: ''
-    }])
+    // const [formattedInput, setFormatted] = useState([{
+    //     key: '',
+    //     color: ''
+    // }])
+    const [pastGuesses, setPastGuesses] = useState<Array<Array<object>>>([[{}]])
     let countTurns = useRef(0)
     let matchCounter = useRef(0)
     // The fledgling of an idea below was to count keypresses and if == 8 then the conditions are met for handlesubmit. This is to prevent early submission on a users' guess, but now I'm seeing that resetting that value may be tricky? Actually maybe I just reset the value at the end of the handleSubmit.. After implementing that it now seems busted because using the delete key would still add to the keyPresses var.. OH If I instead compare the .length of a string of the keypresses that should do it! Wait... I only need to check the .length of the originally userInput state at that point right? AH but I need to reset the length at the end... Now I'm getting confused. Not to mention I'll need to do something like move the userInput of one from currentGuess to pastGuesses for the next iteration I think..   FormattedInput could be the old guess and I could reset userInput at the end of the handleSubmit??
@@ -28,17 +29,35 @@ const useGame = ({bird}: {bird: string}) => {
     const handleChange = (e: KeyboardEvent) => {
         // setKeyPresses(e.key)
         setUserInput(e.key)
+
+        if (e.key === 'Backspace') {
+            setUserInput(previous => previous.slice(0, -1))
+            return
+        }
+
+        // if (history.includes(userInput)) {
+        //     alert('You already tried this word. Please try again')
+        //     return
+        // }
         // console.log(e.key)
     }
     //This does almost everything right now. It's sort of a bloated mess.
     const handleSubmit = (e: KeyboardEvent) => {
         if (e.key === 'Enter' && userInput.length === 8){
+
+
+        if (history.includes(userInput)) {
+            alert('You already tried this word. Please try again')
+            return
+        } else { setHistory(previous => {
+            return [...previous, userInput]
+        })}
+
         let solutionArr = [...bird]
         let formattedUserInput = [...userInput].map((letter) => {
             return {key: letter, color: 'grey'}
         })
         
-
         // Marking exact matches
         formattedUserInput.forEach((letter, index) => {
             if (solutionArr[index] === letter.key) {
@@ -55,8 +74,10 @@ const useGame = ({bird}: {bird: string}) => {
                 solutionArr[solutionArr.indexOf(letter.key)] = ''
             }
         })
-        setFormatted(formattedUserInput)
-        setReveal(!reveal)
+        //I was trying to use the var 'formattedInput' before, but I think 'pastGuesses' is formatted properly to store multiple arrays of objects inside an array
+        setPastGuesses(previous => [{...previous, formattedUserInput}])
+        setUserInput('')
+        // setReveal(!reveal) --> I'll probably still need this.
         countTurns.current++
         // keyPresses = 0
         gameOver()
@@ -84,9 +105,7 @@ const useGame = ({bird}: {bird: string}) => {
     }
 
 
-    //in the onSubmit can do something like-- if submitted value != {bird} show {bird}
-
-        return {countTurns, matchCounter, userInput, handleChange, handleSubmit}
+        return {countTurns, matchCounter, userInput, pastGuesses, handleChange, handleSubmit}
     //         <div className='grid'>
     //             <p>{bird}</p>
     //             <form onSubmit={handleSubmit}>
