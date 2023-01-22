@@ -11,40 +11,34 @@ const useGame = ({bird}: {bird: string}) => {
     const [pastGuesses, setPastGuesses] = useState<Array<Array<object>>>([[{}]])
     let countTurns = useRef(0)
     let matchCounter = useRef(0)
- 
-    const [keyPresses, setKeyPresses] = useState('')
 
-    //Saves typed input from user and adds to wonky keypress counter.
+
+    //Saves typed input from user
     const handleChange = (e: KeyboardEvent) => {
-        // setKeyPresses(e.key)
+
         if (e.key === "Backspace") {
-            // e.preventDefault()
             if(userInput.length > 0) {
             setUserInput(previous => {
-                console.log('previous', previous)
                 return previous.slice(0, -1) 
-            })
-        } return
-        }else if (userInput.length < 8) {
-            console.log(userInput)
-            setUserInput(previous => previous + e.key)
-            console.log(userInput)
+                })
+            } 
+        return
         }
-         
-
-        
-    //    console.log(userInput)
-        // if (history.includes(userInput)) {
-        //     alert('You already tried this word. Please try again')
-        //     return
-        // }
-        
+        else if (userInput.length < 8 && e.key != "Enter") {
+            setUserInput(previous => previous + e.key)
+        }
+        else if (e.key === "Enter") {
+            handleSubmit(e)
+        }
+        console.log(userInput)
     }
+
+
     //This does almost everything right now. It's sort of a bloated mess.
     const handleSubmit = (e: KeyboardEvent) => {
         if (e.key === 'Enter' && userInput.length === 8){
 
-
+        // Checking if word has already been tried.
         if (history.includes(userInput)) {
             alert('You already tried this word. Please try again')
             return
@@ -71,18 +65,18 @@ const useGame = ({bird}: {bird: string}) => {
             if (solutionArr.includes(letter.key) && letter.color !== 'green') {
                 formattedUserInput[index].color = 'yellow'
                 solutionArr[solutionArr.indexOf(letter.key)] = ''
-            }
+            } 
         })
         //I was trying to use the var 'formattedInput' before, but I think 'pastGuesses' is formatted properly to store multiple arrays of objects inside an array
         setPastGuesses(previous => [{...previous, formattedUserInput}])
         setUserInput('')
         // setReveal(!reveal) --> I'll probably still need this.
         countTurns.current++
-        // keyPresses = 0
         gameOver()
-    }}
+        }else if (e.key === 'Enter' && userInput.length != 8) {
+        alert('Word must be 8 characters!')}
+    }
 
-    // console.log(userInput)
     // Wins & Losses
 
     const gameOver = () => {
