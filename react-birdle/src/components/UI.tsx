@@ -1,10 +1,10 @@
-import {useRef, useEffect} from 'react'
+import {useEffect} from 'react'
 import useGame from '../hooks/useGame'
 import Grid from './Grid'
 
 export default function UI({bird}: { bird: string})  {
 
-   const { countTurns, pastGuesses, userInput, handleChange} = useGame({bird})
+   const { countTurns, pastGuesses, userInput, handleChange, firstTurn} = useGame({bird})
     
 //This is effectively a keylogger
    useEffect(() => {
@@ -16,7 +16,9 @@ export default function UI({bird}: { bird: string})  {
     
     return (
         <div>
-            <Grid countTurns={countTurns} userInput={userInput} pastGuesses={pastGuesses} handleChange={handleChange} />
+             <div className="current">current guess: {userInput}</div>
+             <br/>
+            <Grid countTurns={countTurns} userInput={userInput} pastGuesses={pastGuesses} handleChange={handleChange} firstTurn={firstTurn}/>
         </div>
 
 

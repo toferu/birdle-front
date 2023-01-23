@@ -1,15 +1,17 @@
+import { match } from 'assert'
 import React, {useState, useRef} from 'react'
 
 const useGame = ({bird}: {bird: string}) => {
     const [userInput, setUserInput] = useState('')
     const [history, setHistory] = useState<Array<string>>([])
-
+    const [firstTurn, setFirstTurn] = useState(true)
+    const [usedKeys, setUsedKeys] = useState({
+        key: "", color: ""})
     //This was challenging to get right
     const [pastGuesses, setPastGuesses] = useState<Array<Array<{key: string, color:string}>>>([])
 
     let countTurns = useRef(0)
     let matchCounter = useRef(0)
-
 
     //Saves typed input from user
     const handleChange = (e: KeyboardEvent) => {
@@ -28,7 +30,7 @@ const useGame = ({bird}: {bird: string}) => {
         else if (e.key === "Enter") {
             handleSubmit(e)
         }
-        console.log(userInput)
+        // console.log(userInput)
     }
 
 
@@ -48,7 +50,7 @@ const useGame = ({bird}: {bird: string}) => {
         let formattedUserInput = [...userInput].map((letter) => {
             return {key: letter, color: 'grey'}
         })
-        console.log(typeof formattedUserInput)
+
         // Marking exact matches
         formattedUserInput.forEach((letter, index) => {
             if (solutionArr[index] === letter.key) {
@@ -56,7 +58,7 @@ const useGame = ({bird}: {bird: string}) => {
                 solutionArr[index] = ''
                 matchCounter.current++
             }
-            console.log(formattedUserInput)
+            // console.log(formattedUserInput)
         })
 
         // Marking partial matches
@@ -68,13 +70,48 @@ const useGame = ({bird}: {bird: string}) => {
         })
 
         setPastGuesses((previous: any[]) => [...previous, formattedUserInput])
+        // usedKeyTracker(formattedUserInput)
         setUserInput('')
         countTurns.current++
+        setFirstTurn(false)
         gameOver()
+        matchCounter.current = 0
         }else if (e.key === 'Enter' && userInput.length != 8) {
         alert('Word must be 8 characters!')}
+
+        
     }
-console.log(pastGuesses)
+
+    //Used letters
+    // const usedKeyTracker = (formattedUserInput: any[] | React.SetStateAction<{ key: string; color: string }>):any => {
+    //     const newUsedKeys = formattedUserInput.reduce((access: { [x: string]: any }, current: { key: string | number; color: any }) => {
+    //         access[current.key] = current.color
+    //         return access
+    //     },{})
+
+    //     setUsedKeys({...usedKeys, ...formattedUserInput}) 
+
+    //         formattedUserInput.forEach((l: { key: string | number; color: string }) => {
+    //         const currentColor = usedKeys[l.key]
+    
+    //         if (l.color === 'green') {
+    //             usedKeys[l.key] = 'green'
+    //             return
+    //         }
+    //         if (l.color === 'yellow' && currentColor !== 'green') {
+    //             usedKeys[l.key] = 'yellow'
+    //             return
+    //         }
+    //         if (l.color === 'grey' && currentColor !== ('green' || 'yellow')) {
+    //             usedKeys[l.key] = 'grey'
+    //             return
+    //         }
+    //         })
+    
+    //         // return usedKeys
+    //     }
+        console.log(matchCounter.current)
+       
     // Wins & Losses
 
     const gameOver = () => {
@@ -97,7 +134,7 @@ console.log(pastGuesses)
     }
 
 
-        return {countTurns, matchCounter, userInput, pastGuesses, handleChange, handleSubmit}
+        return {countTurns, matchCounter, userInput, pastGuesses, handleChange, firstTurn, usedKeys}
 
     }
 
