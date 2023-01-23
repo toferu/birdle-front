@@ -131,6 +131,7 @@ const useGame = ({bird}: {bird: string}) => {
         else if (countTurns.current === 8 && matchCounter.current != 8) {
             alert(`The bird was ${bird}. Too bad.`)
         }
+        
     }
 
 

@@ -13,10 +13,12 @@ export default function UI({bird}: { bird: string})  {
    }, [handleChange])
 
     
-    
+   
     return (
         <div>
-             <div className="current">current guess: {userInput}</div>
+             <div className="current">
+                current guess: {userInput}
+                </div>
              <br/>
             <Grid countTurns={countTurns} userInput={userInput} pastGuesses={pastGuesses} handleChange={handleChange} firstTurn={firstTurn}/>
         </div>
