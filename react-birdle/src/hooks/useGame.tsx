@@ -3,12 +3,25 @@ import React, {useState, useRef} from 'react'
 const useGame = ({bird}: {bird: string}) => {
     const [userInput, setUserInput] = useState('')
     const [history, setHistory] = useState<Array<string>>([])
-    const [reveal, setReveal] = useState(false)
-    // const [formattedInput, setFormatted] = useState([{
-    //     key: '',
-    //     color: ''
-    // }])
-    const [pastGuesses, setPastGuesses] = useState<Array<Array<object>>>([[{}]])
+
+    //This is stupid
+    // interface GuessData {
+    //     key: string,
+    //     color: string
+    // }
+    // interface Guesses {
+    //     guess1: Array<GuessData>
+    //     guess2: Array<GuessData>
+    //     guess3: Array<GuessData>
+    //     guess4: Array<GuessData>
+    //     guess5: Array<GuessData>
+    //     guess6: Array<GuessData>
+    //     guess7: Array<GuessData>
+    //     guess8: Array<GuessData>
+    // }
+    // const [pastGuesses, setPastGuesses] = useState<Array<Guesses>>([])
+const [pastGuesses, setPastGuesses] = useState<Array<Array<{key: string, color:string}>>>([])
+
     let countTurns = useRef(0)
     let matchCounter = useRef(0)
 
@@ -58,6 +71,7 @@ const useGame = ({bird}: {bird: string}) => {
                 solutionArr[index] = ''
                 matchCounter.current++
             }
+            console.log(formattedUserInput)
         })
 
         // Marking partial matches
@@ -67,10 +81,10 @@ const useGame = ({bird}: {bird: string}) => {
                 solutionArr[solutionArr.indexOf(letter.key)] = ''
             } 
         })
-        //I was trying to use the var 'formattedInput' before, but I think 'pastGuesses' is formatted properly to store multiple arrays of objects inside an array
-        setPastGuesses(previous => [{...previous, formattedUserInput}])
+
+        setPastGuesses((previous: any[]) => [...previous, formattedUserInput])
         setUserInput('')
-        // setReveal(!reveal) --> I'll probably still need this.
+        console.log(pastGuesses)
         countTurns.current++
         gameOver()
         }else if (e.key === 'Enter' && userInput.length != 8) {
@@ -100,18 +114,7 @@ const useGame = ({bird}: {bird: string}) => {
 
 
         return {countTurns, matchCounter, userInput, pastGuesses, handleChange, handleSubmit}
-    //         <div className='grid'>
-    //             <p>{bird}</p>
-    //             <form onSubmit={handleSubmit}>
-    //                 {reveal ? formattedInput.map((letter, index) => (
-    //                 <span key={index} className={letter.color}>
-    //                 {letter.key}
-    //                 </span>))
-    //                     : <input autoFocus className='tile' type='text' placeholder='    ' minLength={8} maxLength={8} onChange={handleChange}></input>} <input id='submission' type='submit'></input><br/></form>
 
-
-    //         </div>
-    // );
     }
 
     export default useGame
