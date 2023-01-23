@@ -4,23 +4,8 @@ const useGame = ({bird}: {bird: string}) => {
     const [userInput, setUserInput] = useState('')
     const [history, setHistory] = useState<Array<string>>([])
 
-    //This is stupid
-    // interface GuessData {
-    //     key: string,
-    //     color: string
-    // }
-    // interface Guesses {
-    //     guess1: Array<GuessData>
-    //     guess2: Array<GuessData>
-    //     guess3: Array<GuessData>
-    //     guess4: Array<GuessData>
-    //     guess5: Array<GuessData>
-    //     guess6: Array<GuessData>
-    //     guess7: Array<GuessData>
-    //     guess8: Array<GuessData>
-    // }
-    // const [pastGuesses, setPastGuesses] = useState<Array<Guesses>>([])
-const [pastGuesses, setPastGuesses] = useState<Array<Array<{key: string, color:string}>>>([])
+    //This was challenging to get right
+    const [pastGuesses, setPastGuesses] = useState<Array<Array<{key: string, color:string}>>>([])
 
     let countTurns = useRef(0)
     let matchCounter = useRef(0)
@@ -84,13 +69,12 @@ const [pastGuesses, setPastGuesses] = useState<Array<Array<{key: string, color:s
 
         setPastGuesses((previous: any[]) => [...previous, formattedUserInput])
         setUserInput('')
-        console.log(pastGuesses)
         countTurns.current++
         gameOver()
         }else if (e.key === 'Enter' && userInput.length != 8) {
         alert('Word must be 8 characters!')}
     }
-
+console.log(pastGuesses)
     // Wins & Losses
 
     const gameOver = () => {

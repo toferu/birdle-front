@@ -48,7 +48,7 @@ console.log(birdWord)
       <h1>Birdle </h1>
       <br/>
       <br/>
-      <img src='../public/crow-solid.svg'></img>
+      {/* <img src='../public/crow-solid.svg'></img> */}
       <UI bird={birdWord} />
     </div>
   );

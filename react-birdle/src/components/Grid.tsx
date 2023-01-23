@@ -11,7 +11,7 @@ interface PrevGuesses {
 interface GridProps {
     countTurns: React.MutableRefObject<number>
     userInput: string
-    pastGuesses: Array<undefined | PrevGuesses>
+    pastGuesses: Array<Array<PrevGuesses>>
     handleChange: (e: KeyboardEvent) => void
 }
 
@@ -22,13 +22,13 @@ export default function Grid(props: GridProps) {
     return (
         <div>
             
-            {/* {props.pastGuesses.map((letter, index) => {
+            {props.pastGuesses.map((letter, index) => {
                 if(props.countTurns.current === index) {
-                    return <Row key={index} userInput={props.userInput} />
+                    return <Row key={index} guess={[]} userInput={props.userInput} />
                 }
-                if(guess !== undefined)
-                return <Row key={index} guess={letter} />
-            })} */}
+                if(props.pastGuesses !== undefined)
+                return <Row key={index} guess={letter} userInput={''} />
+            })}
         </div>
     )
 }
