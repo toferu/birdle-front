@@ -1,7 +1,7 @@
 import React from 'react'
-
+import InputRow from './InputRow'
 import Row from './Row'
-
+import EmptyRow from './EmptyRow'
 interface PrevGuesses {
     key: string,
     color: string
@@ -33,6 +33,8 @@ export default function Grid(props: GridProps) {
 //         }
 // console.log(props.userInput)
     return (
+        <>
+
         <div>
             {props.pastGuesses.map((letter, index) => {
                 if(props.countTurns.current === index) {
@@ -41,7 +43,13 @@ export default function Grid(props: GridProps) {
                 return <Row key={index} userInput={props.userInput} guess={letter}/>
             }})} 
         </div>
-        
+        <div>
+        <InputRow UserInput = {props.userInput} />
+        </div>
+        <div>
+            <EmptyRow />
+        </div>
+        </>
     )
 }
 

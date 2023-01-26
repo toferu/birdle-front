@@ -26,7 +26,7 @@ console.log(userInput)
         )
     } 
 
-    console.log(userInput)
+    // console.log(userInput)
 //This part should show what's being typed, but it doesn't
    if (userInput) {
       let letters = userInput.split('')
