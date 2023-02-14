@@ -13,7 +13,7 @@ const useGame = ({bird}: {bird: string}) => {
     let countTurns = useRef(0)
     let matchCounter = useRef(0)
 
-    //Saves typed input from user
+    //Saves typed input from user 
     const handleChange = (e: KeyboardEvent) => {
 
         if (e.key === "Backspace") {

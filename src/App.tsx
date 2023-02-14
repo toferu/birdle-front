@@ -15,7 +15,7 @@ const [birdArray, setBirdArray] = useState([{
 const [birdWord, setBirdWord] = useState("")
 
 //This variable makes toggling the url for testing easier
-const url = 'http://localhost:8000/api/birdle/'
+const url = 'https://birdlegotback.herokuapp.com/api/birdle'
 
 // This checks to see if birdArray is already loaded. If not, it does an axios get request to the server for the array of data. Else, it returns the already loaded array.
 const getWord= () => {
