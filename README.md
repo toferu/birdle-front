@@ -4,13 +4,17 @@
 
 https://birdlegame.herokuapp.com
 
-A single-page web application inspired by Wordle. Built with TypeScript and React.js, Birdle gives you eight tries to  guess eight letter bird names.
+A single-page web application inspired by Wordle. You have eight tries to guess an eight letter word for a type of bird e.g. 'flamingo'.
 
 The first iteration used html forms for input as at the time I did not know about React's event handlers. I learned how to re-format the input to match the original Wordle more closely from this video series by The Net Ninja. I also borrowed the css animations from there as well:
 
 https://www.youtube.com/playlist?list=PL4cUxeGkcC9gXdVXVJBmHpSI7zCEcjLUX
 
 I'm currently developing a workaround for the grid and row components as the method used in the video series does not work in TypeScript.
+
+The current version only uses the database for the solution words. Since there's only a small pool of words that fit, you could build a simpler version without the back-end. The integration with a backend here is for the eventual addition of user profiles to store stats. 
+
+I have considered adding a list of words that could be accepted and are not solutions, but for now guessing eight letter bird names seems tough enough-- so if you want to type gibberish in to try and find letters you can. 
 
 ## Getting Started
 
