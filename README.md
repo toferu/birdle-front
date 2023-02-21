@@ -6,7 +6,7 @@ https://birdlegame.herokuapp.com
 
 A single-page web application inspired by Wordle. You have eight tries to guess an eight letter word for a type of bird e.g. 'flamingo'.
 
-The first iteration used html forms for input as at the time I did not know about React's event handlers. I learned how to re-format the input to match the original Wordle more closely from this video series by The Net Ninja. I also borrowed the css animations from there as well:
+I built the bulk of this in 3 days as my first TypeScript project. The first iteration used html forms for input as at the time I did not know about React's event handlers. I learned how to re-format the input to match the original Wordle more closely from this video series by The Net Ninja. I also borrowed the css animations from there as well:
 
 https://www.youtube.com/playlist?list=PL4cUxeGkcC9gXdVXVJBmHpSI7zCEcjLUX
 
