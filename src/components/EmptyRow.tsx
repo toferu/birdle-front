@@ -5,6 +5,7 @@ const EmptyRow = () => {
 
 
     return (
+
         <div className = 'row'>
             
         </div>
